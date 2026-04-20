@@ -1,0 +1,273 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #F2F0EB;
+  color: #1a1a1a;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background: #01061d;
+}
+
+.barra-separadora {
+  height: 3px;
+  background: #F2F0EB;
+}
+
+nav strong {
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: #FAFAF8;
+  font-family: Georgia, serif;
+}
+
+nav div {
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+nav a:hover {
+  color: #FAFAF8;
+}
+
+.botao {
+  background: #FAFAF8;
+  color: #01061d;
+  padding: 0.45rem 1.1rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+
+.botao:hover {
+  background: #E8E6E1;
+}
+
+.destaque {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 460px;
+}
+
+.destaque-texto {
+  background: #01061d;
+  padding: 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.destaque-texto h1 {
+  font-size: 2.1rem;
+  color: #FAFAF8;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.destaque-texto p {
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.destaque-texto .botao {
+  align-self: flex-start;
+}
+
+.destaque img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sobre {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 2.5rem;
+  background: #FAFAF8;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sobre img {
+  width: 42%;
+  max-width: 440px;
+  border-radius: 3px;
+  object-fit: cover;
+  border-top: 4px solid #01061d;
+}
+
+.sobre h2 {
+  font-size: 1.5rem;
+  color: #01061d;
+  margin-bottom: 0.75rem;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.sobre p {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.sobre ul {
+  list-style: none;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.carros {
+  padding: 4rem 2.5rem;
+  background: #F2F0EB;
+  text-align: center;
+  border-top: 1px solid #DDD;
+}
+
+.carros h2 {
+  font-size: 1.6rem;
+  color: #01061d;
+  margin-bottom: 2rem;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.grade-carros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.cartao-carro {
+  background: #FAFAF8;
+  border: 1px solid #DDD;
+  border-top: 3px solid #01061d;
+  border-radius: 2px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.cartao-carro img {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+}
+
+.cartao-carro h3 {
+  font-size: 1rem;
+  color: #01061d;
+  padding: 0.75rem 1rem 0.25rem;
+  font-family: Georgia, serif;
+}
+
+.cartao-carro p {
+  font-size: 0.85rem;
+  color: #555;
+  padding: 0 1rem 1rem;
+  line-height: 1.55;
+}
+
+.funcionalidades {
+  padding: 4rem 2.5rem;
+  background: #FAFAF8;
+  text-align: center;
+  border-top: 1px solid #DDD;
+}
+
+.funcionalidades h2 {
+  font-size: 1.6rem;
+  color: #01061d;
+  margin-bottom: 2rem;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.grade-funcionalidades {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cartao-funcionalidade {
+  background: #F2F0EB;
+  border: 1px solid #DDD;
+  border-left: 4px solid #01061d;
+  border-radius: 2px;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.cartao-funcionalidade span {
+  font-size: 1.5rem;
+}
+
+.cartao-funcionalidade h3 {
+  font-size: 0.95rem;
+  color: #01061d;
+  margin: 0.5rem 0 0.25rem;
+  letter-spacing: 0.03em;
+}
+
+.cartao-funcionalidade p {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.55;
+}
+
+footer {
+  padding: 1.5rem 2.5rem;
+  background: #01061d;
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .destaque { grid-template-columns: 1fr; }
+  .destaque img { height: 240px; }
+  .sobre { flex-direction: column; }
+  .sobre img { width: 100%; }
+  .grade-carros { grid-template-columns: 1fr; }
+  .grade-funcionalidades { grid-template-columns: 1fr; }
+}
