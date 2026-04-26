@@ -1,10 +1,7 @@
--- Arquivo de criação do banco de dados AutoTrack
--- Execute este script no MySQL Workbench conectado à sua máquina virtual Linux (porta 3307)
-
 CREATE DATABASE autotrack;
 USE autotrack;
 
--- 1. Tabela de Usuários
+-- Tabela de Usuários
 CREATE TABLE usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
@@ -12,7 +9,7 @@ CREATE TABLE usuario (
     senha VARCHAR(50) NOT NULL
 );
 
--- 2. Tabela de Veículos
+-- Tabela de Veículos
 CREATE TABLE veiculo (
     id INT PRIMARY KEY AUTO_INCREMENT,
     marca VARCHAR(45) NOT NULL,
@@ -23,13 +20,13 @@ CREATE TABLE veiculo (
     FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
 );
 
--- 3. Tabela de Apoio: Tipos de Manutenção
+-- Tabela de Apoio: Tipos de Manutenção
 CREATE TABLE tipo_manutencao (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL
 );
 
--- 4. Tabela do Logbook (Histórico de Manutenções)
+-- Tabela do Logbook (Histórico de Manutenções)
 CREATE TABLE manutencao (
     id INT PRIMARY KEY AUTO_INCREMENT,
     data_servico DATE NOT NULL,
@@ -42,7 +39,7 @@ CREATE TABLE manutencao (
     FOREIGN KEY (fk_tipo) REFERENCES tipo_manutencao(id)
 );
 
--- Inserindo os tipos padrão de manutenção
+-- Inserindo os tipos de manutenção
 INSERT INTO tipo_manutencao (nome) VALUES 
 ('Preventiva'),
 ('Corretiva'),
