@@ -14,10 +14,10 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 Siga os passos abaixo para testar o projeto localmente:
 
 ### 1. Banco de Dados
-1. Abra o MySQL Workbench (conectado localmente ou na sua Máquina Virtual).
+1. Abra o MySQL Workbench (conectado localmente).
 2. Copie o conteúdo do arquivo `src/database/script-tabelas.sql` e execute-o. Isso irá criar o banco de dados `autotrack` e suas respectivas tabelas.
 
-### 2. Configurando o Ambiente
+### 2. Configurando o Ambiente(Localmente)
 1. Abra o arquivo `.env.dev` na raiz do projeto.
 2. Preencha as variáveis `DB_USER` e `DB_PASSWORD` com as credenciais do seu banco de dados MySQL.
 3. Certifique-se de que a porta `DB_PORT` corresponde ao local onde seu banco está rodando (ex: `3306` local ou `3307` via VM).
@@ -36,7 +36,7 @@ Siga os passos abaixo para testar o projeto localmente:
 
 ### 4. Acesso ao Sistema
 - Com o servidor rodando, abra o seu navegador e acesse a página inicial em: **`http://localhost:3333`**
-- Acesse a página de Cadastro e utilize o "Código de Convite VIP" (ex: `FERRARI90`) para se registrar.
+- Acesse a página de Cadastro e utilize o "Código de Convite VIP" (ex: `FERRARI90`, `PORSCHE997`, `BMW2000`) para se registrar.
 
 ---
-*Projeto desenvolvido para a disciplina de Projeto Individual (SPTech).*
+*Projeto desenvolvido para a disciplina de Pesquisa e Inovação (SPTech).*
