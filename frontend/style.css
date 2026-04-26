@@ -264,10 +264,129 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .destaque { grid-template-columns: 1fr; }
-  .destaque img { height: 240px; }
-  .sobre { flex-direction: column; }
-  .sobre img { width: 100%; }
-  .grade-carros { grid-template-columns: 1fr; }
-  .grade-funcionalidades { grid-template-columns: 1fr; }
+  .destaque {
+    grid-template-columns: 1fr;
+  }
+
+  .destaque img {
+    height: 240px;
+  }
+
+  .sobre {
+    flex-direction: column;
+  }
+
+  .sobre img {
+    width: 100%;
+  }
+
+  .grade-carros {
+    grid-template-columns: 1fr;
+  }
+
+  .grade-funcionalidades {
+    grid-template-columns: 1fr;
+  }
+}
+
+.login {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  background: #F2F0EB;
+}
+
+.card-auth {
+  background: #FAFAF8;
+  border: 1px solid #DDD;
+  border-top: 4px solid #01061d;
+  border-radius: 2px;
+  padding: 2.5rem 3rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.card-auth h2 {
+  font-size: 1.6rem;
+  color: #01061d;
+  margin-bottom: 2rem;
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.campo span {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 0.02em;
+}
+
+.campo input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #CCC;
+  border-radius: 2px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #FFF;
+  transition: border-color 0.2s;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: #01061d;
+}
+
+.formulario .botao {
+  margin-top: 0.75rem;
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+}
+
+.alerta_erro {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.card_erro {
+  display: none;
+  background: #d9534f;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.loading-div {
+  margin-top: 1.5rem;
+  display: none;
+}
+
+.loading-div img {
+  width: 40px;
+  margin: 0 auto;
 }
