@@ -8,9 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AquaTech | Dashboards</title>
 
-    
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <link rel="stylesheet" href="../style.css" />
     <script src="../js/sessao.js"></script>
     <script src="./../js/alerta.js"></script>
 
@@ -32,31 +31,29 @@
 
     <div class="janela">
         <div class="header-left">
-            <h1>AquaTech</h1>
+            <h1>AutoTrack</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
 
-            <div class="btn-nav-white">
+            <div class="btn-nav-white botao">
                 <a href="./cards.html">
-                    <h3>Aquários</h3>
+                    <h3>Meus Veículos</h3>
                 </a>
             </div>
 
-            <div class="btn-nav">
-
+            <div class="btn-nav botao">
                 <h3>Gráficos</h3>
-
             </div>
 
-            <div class="btn-nav-white">
+            <div class="btn-nav-white botao">
                 <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
+                    <h3>Histórico</h3>
                 </a>
             </div>
 
-            <div class="btn-logout" onclick="limparSessao()">
+            <div class="btn-logout botao" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
 
@@ -90,11 +87,11 @@
         var aquarios = JSON.parse(sessionStorage.AQUARIOS);
         aquarios.forEach(item => {
             document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
+            <button class="btn-chart botao" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
             `
 
             document.getElementById("graficos").innerHTML += `
-                <div id="grafico${item.id}" class="display-none">
+                <div id="grafico${item.id}" class="display-none cartao-funcionalidade">
                     <h3 class="tituloGraficos">
                         <span id="tituloAquario${item.id}">${item.descricao}</span>
                     </h3>
@@ -102,7 +99,7 @@
                         <canvas id="myChartCanvas${item.id}"></canvas>
                     </div>
                     <div class="label-captura">
-                        <p id="avisoCaptura${item.id}" style="color: white"></p>
+                        <p id="avisoCaptura${item.id}" style="color: #333"></p>
                     </div>
                 </div>
             `

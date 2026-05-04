@@ -9,8 +9,7 @@
     <title>AquaTech | Tempo Real</title>
 
 
-    <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
+    <link rel="stylesheet" href="../style.css" />
 
     <script src="../js/sessao.js"></script>
     <script src="../js/alerta.js"></script>
@@ -26,29 +25,29 @@
 
         <div class="header-left dash-header">
 
-            <h1>AquaTech</h1>
+            <h1>AutoTrack</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
 
-            <div class="btn-nav">
-                <h3>Aquários</h3>
+            <div class="btn-nav botao">
+                <h3>Meus Veículos</h3>
             </div>
 
-            <div class="btn-nav-white">
+            <div class="btn-nav-white botao">
                 <a href="./dashboard.html">
                     <h3>Gráficos</h3>
                 </a>
             </div>
 
-            <div class="btn-nav-white">
+            <div class="btn-nav-white botao">
                 <a href="./mural.html">
-                    <h3>Mural de Avisos</h3>
+                    <h3>Histórico</h3>
                 </a>
             </div>
 
-            <div class="btn-logout" onclick="limparSessao()">
+            <div class="btn-logout botao" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
 
@@ -99,19 +98,18 @@
 
     function exibirAquarios() {
         JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
+            document.getElementById("resumo_aquarios").innerHTML += `
+                <div class="cartao-carro">
+                    <div class="header" style="padding: 10px;">
+                        <h3>${item.descricao}</h3>
                     </div>
+                    <div class="body">
+                        <p id="temp_aquario_${item.id}">-</p>
+                        <p id="umid_aquario_${item.id}">-</p>
                     </div>
-                    `
+                    <div class="cor-alerta" id="card_${item.id}"></div>
+                </div>
+            `
         });
     }
 
