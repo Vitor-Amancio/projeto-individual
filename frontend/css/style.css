@@ -121,6 +121,11 @@ nav a:hover {
   margin: 0 auto;
 }
 
+.sobre.reverse {
+  flex-direction: row-reverse;
+  background: #F2F0EB;
+}
+
 .sobre img {
   width: 42%;
   max-width: 440px;

@@ -53,7 +53,6 @@
         </div>
 
         <div class="dash">
-            <!-- KPIs -->
             <div class="kpi-container">
                 <div class="kpi-card">
                     <div class="kpi-title">Veículos Ativos</div>
@@ -73,7 +72,6 @@
                 </div>
             </div>
 
-            <!-- Gráficos -->
             <div class="charts-container">
                 <div class="chart-box" style="flex: 2;">
                     <div class="chart-title">Custo Mensal de Manutenção (2024)</div>
@@ -85,7 +83,6 @@
                 </div>
             </div>
 
-            <!-- Tabela -->
             <div class="table-container">
                 <div class="chart-title">Últimas Manutenções Realizadas</div>
                 <table>
@@ -141,12 +138,9 @@
     </div>
 
     <script>
-        // Caso o usuário esteja logado via sessionStorage
         if (sessionStorage.NOME_USUARIO) {
             document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
         }
-
-        // Gráfico de Barras - Custo Mensal
         const ctxBar = document.getElementById('barChart').getContext('2d');
         new Chart(ctxBar, {
             type: 'bar',
@@ -171,20 +165,18 @@
                 }
             }
         });
-
-        // Gráfico de Rosca - Tipos de Manutenção
         const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
         new Chart(ctxDoughnut, {
             type: 'doughnut',
             data: {
                 labels: ['Preventiva', 'Corretiva', 'Upgrade', 'Estética'],
                 datasets: [{
-                    data: [40, 20, 30, 10], // Porcentagens
+                    data: [40, 20, 30, 10],
                     backgroundColor: [
-                        '#5cb85c', // Verde
-                        '#d9534f', // Vermelho
-                        '#f0ad4e', // Laranja/Amarelo
-                        '#5bc0de'  // Azul Claro
+                        '#5cb85c',
+                        '#d9534f',
+                        '#f0ad4e',
+                        '#5bc0de'
                     ],
                     borderWidth: 0,
                     hoverOffset: 4
