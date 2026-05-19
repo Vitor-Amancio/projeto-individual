@@ -7,8 +7,8 @@ function buscarKpis(idUsuario) {
     var instrucaoSql = `
         SELECT 
             (SELECT COUNT(*) FROM veiculo WHERE fk_usuario = ${idUsuario}) AS veiculosAtivos,
-            COALESCE(SUM(m.valor), 0) AS custoTotal,
-            COALESCE(AVG(m.valor), 0) AS gastoMedio,
+            SUM(m.valor) AS custoTotal,
+            AVG(m.valor) AS gastoMedio,
             COUNT(m.id) AS totalManutencoes
         FROM manutencao m
         JOIN veiculo v ON m.fk_veiculo = v.id
@@ -70,11 +70,41 @@ function buscarUltimas(idUsuario) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+// Funcao para insrir as manutenções dos veiculos
+function inserir(data_servico, quilometragem, valor, descricao, fk_veiculo, fk_tipo) {
+    var instrucaoSql = `
+    INSERT INTO manutencao (data_servico, quilometragem, valor, descricao, fk_veiculo, fk_tipo) 
+    VALUES ('${data_servico}', ${quilometragem}, ${valor}, '${descricao}', ${fk_veiculo}, ${fk_tipo});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+//Função para inserir os veiculo
+function inserirVeiculo(marca, modelo, ano, placa, fk_usuario) {
+    var instrucaoSql = `
+    INSERT INTO veiculo (marca, modelo, ano, placa, fk_usuario) VALUES ('${marca}', '${modelo}', ${ano}, '${placa}', ${fk_usuario});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+//funcao para buscar os veiculos
+function buscarVeiculo(idUsuario) {
+    var instrucaoSql = `
+    SELECT id, marca, modelo FROM veiculo WHERE fk_usuario = ${idUsuario};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 // Exportando as funções para serem utilizadas pelo controller
 module.exports = {
     buscarKpis,
     buscarCustoMensal,
     buscarDistribuicao,
-    buscarUltimas
+    buscarUltimas,
+    inserir,
+    inserirVeiculo,
+    buscarVeiculo
 };

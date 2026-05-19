@@ -6,10 +6,10 @@ body { font-family: Arial, sans-serif; background-color: #F2F0EB; margin: 0; col
 .header-left h1 { font-family: Georgia, serif; font-size: 2rem; margin-bottom: 1rem; color: #FAFAF8; font-weight: normal; letter-spacing: 0.05em; }
 .hello h3 { font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); font-weight: normal; margin-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 1.5rem; }
 .btn-nav, .btn-nav-white, .btn-logout { padding: 12px 15px; border-radius: 2px; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; }
-.btn-nav-white { color: rgba(255, 255, 255, 0.7); font-weight: bold; }
+.btn-nav-white { color: rgba(255, 255, 255, 0.7); font-weight: bold; background-color: transparent; }
 .btn-nav-white:hover { background: rgba(255, 255, 255, 0.1); color: #FAFAF8; }
 .btn-nav { background: #FAFAF8; color: #01061d; font-weight: bold; }
-.btn-logout { margin-top: auto; color: #d9534f; font-weight: bold; }
+.btn-logout { margin-top: auto; color: #d9534f; font-weight: bold; background-color: transparent; }
 .btn-logout:hover { background: rgba(217, 83, 79, 0.1); }
 .header-left h3 { margin: 0; font-size: 0.95rem; }
 
