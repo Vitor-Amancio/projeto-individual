@@ -1,6 +1,6 @@
-# AutoTrack - Sistema de Gestão de Manutenção Automotiva
+# FoundCars - Sistema de Gestão de Manutenção Automotiva
 
-O **AutoTrack** é uma plataforma focada no monitoramento rigoroso e na gestão do ciclo de vida automotivo. Ele substitui a adivinhação e o "achismo" da mecânica por telemetria, dados exatos e um histórico confiável de todas as manutenções preventivas e corretivas do seu veículo.
+O **FoundCars** é uma plataforma focada no monitoramento rigoroso e na gestão do ciclo de vida automotivo. Ele substitui a adivinhação e o "achismo" da mecânica por telemetria, dados exatos e um histórico confiável de todas as manutenções preventivas e corretivas do seu veículo.
 
 ## Tecnologias Utilizadas
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
@@ -15,7 +15,7 @@ Siga os passos abaixo para testar o projeto localmente:
 
 ### 1. Banco de Dados
 1. Abra o MySQL Workbench (conectado localmente).
-2. Copie o conteúdo do arquivo `src/database/script-tabelas.sql` e execute-o. Isso irá criar o banco de dados `autotrack` e suas respectivas tabelas.
+2. Copie o conteúdo do arquivo `src/database/script-tabelas.sql` e execute-o. Isso irá criar o banco de dados e suas respectivas tabelas.
 
 ### 2. Configurando o Ambiente(Localmente)
 1. Abra o arquivo `.env.dev` na raiz do projeto.

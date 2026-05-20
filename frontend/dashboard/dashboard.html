@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoTrack | Dashboard</title>
+    <title>FoundCars | Dashboard</title>
 
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
@@ -22,10 +22,11 @@
     <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body onload="validarSessao(); buscarKpis(); buscarCustoMensal(); buscarTipo(); buscarUltimas()">
     <div class="janela">
         <div class="header-left">
-            <h1>AutoTrack</h1>
+            <a href="../index.html"><img src="../image/Foundcars.png" alt="FoundCars Logo"
+                    style="max-width: 150px; margin-bottom: 20px;" /></a>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">Motorista</span>!</h3>
@@ -60,25 +61,25 @@
             <div class="kpi-container">
                 <div class="kpi-card">
                     <div class="kpi-title">Veículos Ativos</div>
-                    <div class="kpi-value">2</div>
+                    <div class="kpi-value" id="kpi_veiculos">-</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Custo Total</div>
-                    <div class="kpi-value">R$ 5.420,00</div>
+                    <div class="kpi-value" id="kpi_custo">-</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Gasto Médio / Manut.</div>
-                    <div class="kpi-value">R$ 1.084,00</div>
+                    <div class="kpi-value" id="kpi_gasto">-</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Total de Manutenções</div>
-                    <div class="kpi-value">5</div>
+                    <div class="kpi-value" id="kpi_total">-</div>
                 </div>
             </div>
 
             <div class="charts-container">
                 <div class="chart-box" style="flex: 2;">
-                    <div class="chart-title">Custo Mensal de Manutenção (2024)</div>
+                    <div class="chart-title">Custo Mensal de Manutenção (2026)</div>
                     <canvas id="barChart"></canvas>
                 </div>
                 <div class="chart-box" style="flex: 1; min-width: 300px;">
@@ -99,42 +100,8 @@
                             <th>Descrição</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>15/04/2024</td>
-                            <td>BMW 320i</td>
-                            <td><span class="badge bg-prev">Preventiva</span></td>
-                            <td>R$ 1.200,00</td>
-                            <td>Troca de óleo e filtros</td>
-                        </tr>
-                        <tr>
-                            <td>10/03/2024</td>
-                            <td>Honda Civic</td>
-                            <td><span class="badge bg-corr">Corretiva</span></td>
-                            <td>R$ 850,00</td>
-                            <td>Troca de pastilhas de freio</td>
-                        </tr>
-                        <tr>
-                            <td>22/02/2024</td>
-                            <td>BMW 320i</td>
-                            <td><span class="badge bg-up">Upgrade</span></td>
-                            <td>R$ 2.500,00</td>
-                            <td>Remapeamento ECU (Stage 1)</td>
-                        </tr>
-                        <tr>
-                            <td>05/01/2024</td>
-                            <td>Honda Civic</td>
-                            <td><span class="badge bg-est">Estética</span></td>
-                            <td>R$ 350,00</td>
-                            <td>Polimento técnico</td>
-                        </tr>
-                        <tr>
-                            <td>12/12/2023</td>
-                            <td>BMW 320i</td>
-                            <td><span class="badge bg-prev">Preventiva</span></td>
-                            <td>R$ 520,00</td>
-                            <td>Alinhamento e Balanceamento</td>
-                        </tr>
+                    <tbody id="tabela_ultimas">
+                        <!-- As manutenções dinâmicas aparecerão aqui -->
                     </tbody>
                 </table>
             </div>
@@ -146,13 +113,13 @@
             document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
         }
         const ctxBar = document.getElementById('barChart').getContext('2d');
-        new Chart(ctxBar, {
+        var graficoDeBarras = new Chart(ctxBar, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                labels: [], // Preencher via JS
                 datasets: [{
                     label: 'Custo R$',
-                    data: [350, 2500, 850, 1200, 0, 0],
+                    data: [], // Preencher via JS
                     backgroundColor: 'rgba(1, 6, 29, 0.8)',
                     borderColor: '#01061d',
                     borderWidth: 1,
@@ -170,12 +137,12 @@
             }
         });
         const ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
-        new Chart(ctxDoughnut, {
+        var graficoRosca = new Chart(ctxDoughnut, {
             type: 'doughnut',
             data: {
-                labels: ['Preventiva', 'Corretiva', 'Upgrade', 'Estética'],
+                labels: [], // Preencher via JS
                 datasets: [{
-                    data: [40, 20, 30, 10],
+                    data: [], // Preencher via JS
                     backgroundColor: [
                         '#5cb85c',
                         '#d9534f',
@@ -194,6 +161,105 @@
                 }
             }
         });
+        //buscando dados das KPIs
+        function buscarKpis() {
+            var idUsuario = sessionStorage.ID_USUARIO;
+
+            fetch(`/manutencao/kpis/${idUsuario}`).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (respostaJson) {
+                        document.getElementById("kpi_veiculos").innerHTML = respostaJson.veiculosAtivos;
+                        document.getElementById("kpi_custo").innerHTML = "R$ " + Number(respostaJson.custoTotal || 0).toFixed(2);
+                        document.getElementById("kpi_gasto").innerHTML = "R$ " + Number(respostaJson.gastoMedio || 0).toFixed(2);
+                        document.getElementById("kpi_total").innerHTML = respostaJson.totalManutencoes || 0;
+                    });
+                }
+            });
+        }
+
+        // funcao para buscar os dados para grafico de barras
+        function buscarCustoMensal() {
+            var idUsuario = sessionStorage.ID_USUARIO;
+
+            fetch(`/manutencao/custo-mensal/${idUsuario}`).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (respostaJson) {
+                        var nomeDosMeses = ['', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                        var mesesLabel = [];
+                        var valoresCustos = [];
+
+                        for (let i = 0; i < respostaJson.length; i++) {
+                            var mesNumero = respostaJson[i].mes;
+                            mesesLabel.push(nomeDosMeses[mesNumero]);
+                            valoresCustos.push(respostaJson[i].custo);
+
+                        }
+
+                        graficoDeBarras.data.labels = mesesLabel;
+                        graficoDeBarras.data.datasets[0].data = valoresCustos;
+                        graficoDeBarras.update();
+                    });
+                }
+            });
+        }
+
+        //buscar tipos de mantencao para o grafico de rosca
+        function buscarTipo() {
+            var idUsuario = sessionStorage.ID_USUARIO
+
+            fetch(`/manutencao/buscar-distribuicao/${idUsuario}`).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (respostaJson) {
+                        var tiposLabel = [];
+                        var quantidades = [];
+
+                        for (let i = 0; i < respostaJson.length; i++) {
+                            tiposLabel.push(respostaJson[i].tipo);
+                            quantidades.push(respostaJson[i].quantidade);
+                        }
+                        graficoRosca.data.labels = tiposLabel;
+                        graficoRosca.data.datasets[0].data = quantidades;
+                        graficoRosca.update();
+                    });
+                }
+            });
+        }
+
+        //buscando ultimas mantencoes para a tabela
+        function buscarUltimas() {
+            var idUsuario = sessionStorage.ID_USUARIO;
+
+            fetch(`/manutencao/buscar-ultimas/${idUsuario}`).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (respostaJson) {
+
+                        var tabela = document.getElementById("tabela_ultimas");
+                        tabela.innerHTML = "";
+
+                        for (let i = 0; i < respostaJson.length; i++) {
+                            var manut = respostaJson[i];
+
+                            var classeBadge = "bg-prev";
+                            if (manut.tipo === "Corretiva") classeBadge = "bg-corr";
+                            if (manut.tipo === "Upgrade") classeBadge = "bg-up";
+                            if (manut.tipo === "Estética") classeBadge = "bg-est";
+
+                            var novaLinha = `
+                                <tr>
+                                    <td>${manut.dataFormatada}</td>
+                                    <td>${manut.veiculo}</td>
+                                    <td><span class="badge ${classeBadge}">${manut.tipo}</span></td>
+                                    <td>R$ ${Number(manut.valor).toFixed(2)}</td>
+                                    <td>${manut.descricao}</td>
+                                </tr>
+                            `;
+
+                            tabela.innerHTML += novaLinha;
+                        }
+                    });
+                }
+            });
+        }
     </script>
 </body>
 
