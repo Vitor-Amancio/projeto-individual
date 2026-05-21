@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundCars | Cadastrar Veículo</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+
+    <script src="../js/sessao.js"></script>
+    <script src="./../js/alerta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body onload="validarSessao()">
+    <div class="janela">
+        <div class="header-left">
+            <a href="../index.html"><img src="../image/Foundcars.png" alt="FoundCars Logo"
+                    style="max-width: 150px; margin-bottom: 20px;" /></a>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">Motorista</span>!</h3>
+            </div>
+
+
+
+            <div class="btn-nav-white botao">
+                <a href="./dashboard.html">
+                    <h3>Dashboard</h3>
+                </a>
+            </div>
+
+
+
+            <div class="btn-nav botao">
+                <h3>Cadastrar Veículo</h3>
+            </div>
+
+            <div class="btn-nav-white botao">
+                <a href="./cadastro-manutencao.html">
+                    <h3>Cadastrar Manutenção</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout botao" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+        </div>
+
+        <div class="dash" style="justify-content: center; align-items: center; display: flex;">
+            <div class="card-auth" style="max-width: 500px; width: 100%;">
+                <h2>Cadastrar Novo Veículo</h2>
+                <div class="formulario">
+                    <div class="campo">
+                        <span>Marca:</span>
+                        <input id="marca_input" type="text" placeholder="Ex: BMW" />
+                    </div>
+                    <div class="campo">
+                        <span>Modelo:</span>
+                        <input id="modelo_input" type="text" placeholder="Ex: 320i" />
+                    </div>
+                    <div class="campo">
+                        <span>Ano:</span>
+                        <input id="ano_input" type="number" placeholder="Ex: 2024" />
+                    </div>
+                    <div class="campo">
+                        <span>Placa:</span>
+                        <input id="placa_input" type="text" placeholder="Ex: ABC1234" />
+                    </div>
+
+                    <button class="botao" onclick="cadastrarVeiculo()">Cadastrar</button>
+                </div>
+
+                <div id="div_erros_login"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (sessionStorage.NOME_USUARIO) {
+            document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
+        }
+
+        // cadastra veiculo no bd
+        function cadastrarVeiculo() {
+            var marcaVar = document.getElementById('marca_input').value;
+            var modeloVar = document.getElementById('modelo_input').value;
+            var anoVar = document.getElementById('ano_input').value;
+            var placaVar = document.getElementById('placa_input').value;
+            var idUsuarioVar = sessionStorage.ID_USUARIO;
+
+            if (marcaVar == "" || modeloVar == "" || anoVar == "" || placaVar == "") {
+                alert("Preencha todos os campos para prosseguir!");
+                return false;
+            }
+
+            fetch(`/manutencao/inserirVeiculo/${idUsuarioVar}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    marcaServer: marcaVar,
+                    modeloServer: modeloVar,
+                    anoServer: anoVar,
+                    placaServer: placaVar
+                })
+            }).then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    alert("Veículo cadastrado com sucesso!");
+                    window.location = "cards.html";
+                } else {
+                    throw ("Houve um erro ao tentar realizar o cadastro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                alert("Houve um erro. Tente novamente mais tarde.");
+            });
+
+            return false;
+        }
+    </script>
+</body>
+
+</html>

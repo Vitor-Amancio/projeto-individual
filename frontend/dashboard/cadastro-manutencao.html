@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundCars | Cadastrar Manutenção</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+
+    <script src="../js/sessao.js"></script>
+    <script src="./../js/alerta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body onload="validarSessao(); carregarVeiculos();">
+    <div class="janela">
+        <div class="header-left">
+            <a href="../index.html"><img src="../image/Foundcars.png" alt="FoundCars Logo"
+                    style="max-width: 150px; margin-bottom: 20px;" /></a>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">Motorista</span>!</h3>
+            </div>
+
+
+
+            <div class="btn-nav-white botao">
+                <a href="./dashboard.html">
+                    <h3>Dashboard</h3>
+                </a>
+            </div>
+
+
+
+            <div class="btn-nav-white botao">
+                <a href="./cadastro-veiculo.html">
+                    <h3>Cadastrar Veículo</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav botao">
+                <h3>Cadastrar Manutenção</h3>
+            </div>
+
+            <div class="btn-logout botao" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+        </div>
+
+        <div class="dash" style="justify-content: center; align-items: center; display: flex;">
+            <div class="card-auth" style="max-width: 500px; width: 100%;">
+                <h2>Registrar Manutenção</h2>
+                <div class="formulario">
+
+                    <div class="campo">
+                        <span>Veículo:</span>
+                        <select id="veiculo_select" class="input-select"
+                            style="padding: 0.75rem 1rem; border: 1px solid #CCC; border-radius: 2px; font-size: 0.95rem; font-family: inherit; background: #FFF;">
+                            <option value="" disabled selected>Selecione um veículo</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <span>Data do Serviço:</span>
+                        <input id="data_input" type="date" />
+                    </div>
+
+                    <div class="campo">
+                        <span>Tipo de Manutenção:</span>
+                        <select id="tipo_select" class="input-select"
+                            style="padding: 0.75rem 1rem; border: 1px solid #CCC; border-radius: 2px; font-size: 0.95rem; font-family: inherit; background: #FFF;">
+                            <option value="1">Preventiva</option>
+                            <option value="2">Corretiva</option>
+                            <option value="3">Estética</option>
+                            <option value="4">Upgrade</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <span>Quilometragem (KM):</span>
+                        <input id="quilometragem_input" type="number" placeholder="Ex: 50000" />
+                    </div>
+
+                    <div class="campo">
+                        <span>Valor (R$):</span>
+                        <input id="valor_input" type="number" step="0.01" placeholder="Ex: 850.50" />
+                    </div>
+
+                    <div class="campo">
+                        <span>Descrição:</span>
+                        <input id="descricao_input" type="text" placeholder="Ex: Troca de óleo e filtro" />
+                    </div>
+
+                    <button class="botao" onclick="cadastrarManutencao()">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (sessionStorage.NOME_USUARIO) {
+            document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
+        }
+
+        //listar veiculos do usuario
+        function carregarVeiculos() {
+            var idUsuario = sessionStorage.ID_USUARIO;
+
+            fetch(`/manutencao/buscar-veiculo/${idUsuario}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var select = document.getElementById("veiculo_select");
+                        select.innerHTML = "<option value='' disabled selected>Nenhum veículo cadastrado</option>";
+                    } else {
+                        resposta.json().then(function (respostaJson) {
+                            var select = document.getElementById("veiculo_select");
+
+                            for (var i = 0; i < respostaJson.length; i++) {
+                                var veiculo = respostaJson[i];
+                                var option = document.createElement("option");
+                                option.value = veiculo.id;
+                                option.innerHTML = veiculo.marca + " " + veiculo.modelo;
+                                select.appendChild(option);
+                            }
+                        });
+                    }
+                } else {
+                    console.log("Houve um erro na API!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+        }
+
+        // cadastrar nova manutencao no banco de dados
+        function cadastrarManutencao() {
+            var idVeiculoVar = document.getElementById('veiculo_select').value;
+            var dataVar = document.getElementById('data_input').value;
+            var tipoVar = document.getElementById('tipo_select').value;
+            var quilometragemVar = document.getElementById('quilometragem_input').value;
+            var valorVar = document.getElementById('valor_input').value;
+            var descricaoVar = document.getElementById('descricao_input').value;
+            var idUsuarioVar = sessionStorage.ID_USUARIO;
+
+            if (idVeiculoVar == "" || dataVar == "" || tipoVar == "" || quilometragemVar == "" || valorVar == "" || descricaoVar == "") {
+                alert("Preencha todos os campos para prosseguir!");
+                return false;
+            }
+
+            fetch(`/manutencao/inserir/${idUsuarioVar}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fkVeiculoServer: idVeiculoVar,
+                    dataServer: dataVar,
+                    fkTipoServer: tipoVar,
+                    quilometragemServer: quilometragemVar,
+                    valorServer: valorVar,
+                    descricaoServer: descricaoVar
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    alert("Manutenção registrada com sucesso!");
+                    window.location = "dashboard.html";
+                } else {
+                    throw ("Houve um erro ao tentar realizar o registro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                alert("Houve um erro. Tente novamente mais tarde.");
+            });
+
+            return false;
+        }
+    </script>
+</body>
+
+</html>
