@@ -126,9 +126,9 @@
                         resposta.json().then(function (respostaJson) {
                             var select = document.getElementById("veiculo_select");
 
-                            for (var i = 0; i < respostaJson.length; i++) {
-                                var veiculo = respostaJson[i];
-                                var option = document.createElement("option");
+                            for (let i = 0; i < respostaJson.length; i++) {
+                                let veiculo = respostaJson[i];
+                                let option = document.createElement("option");
                                 option.value = veiculo.id;
                                 option.innerHTML = veiculo.marca + " " + veiculo.modelo;
                                 select.appendChild(option);
@@ -174,7 +174,7 @@
             }).then(function (resposta) {
                 if (resposta.ok) {
                     alert("Manutenção registrada com sucesso!");
-                    window.location = "dashboard.html";
+                    window.location = "./dashboard.html";
                 } else {
                     throw ("Houve um erro ao tentar realizar o registro!");
                 }
