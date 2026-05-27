@@ -8,7 +8,6 @@ function buscarKpis(idUsuario) {
         SELECT 
             (SELECT COUNT(*) FROM veiculo WHERE fk_usuario = ${idUsuario}) AS veiculosAtivos,
             SUM(m.valor) AS custoTotal,
-            AVG(m.valor) AS gastoMedio,
             COUNT(m.id) AS totalManutencoes
         FROM manutencao m
         JOIN veiculo v ON m.fk_veiculo = v.id

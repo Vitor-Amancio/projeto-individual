@@ -161,17 +161,24 @@
                 }
             }
         });
-        //buscando dados das KPIs
+        //buscando dados das KPIs e calculando a media de gasto
         function buscarKpis() {
             var idUsuario = sessionStorage.ID_USUARIO;
-
             fetch(`/manutencao/kpis/${idUsuario}`).then(function (resposta) {
                 if (resposta.ok) {
                     resposta.json().then(function (respostaJson) {
+
+                        var custo = Number(respostaJson.custoTotal || 0);  // usando o || 0 para caso nao houver, o valor padrao seja 0
+                        var total = Number(respostaJson.totalManutencoes || 0);
+
+                        var gastoMedioCalculado = 0;
+                        if (total > 0) {
+                            gastoMedioCalculado = custo / total;
+                        }
                         document.getElementById("kpi_veiculos").innerHTML = respostaJson.veiculosAtivos;
-                        document.getElementById("kpi_custo").innerHTML = "R$ " + Number(respostaJson.custoTotal || 0).toFixed(2);
-                        document.getElementById("kpi_gasto").innerHTML = "R$ " + Number(respostaJson.gastoMedio || 0).toFixed(2);
-                        document.getElementById("kpi_total").innerHTML = respostaJson.totalManutencoes || 0;
+                        document.getElementById("kpi_custo").innerHTML = "R$ " + custo.toFixed(2);
+                        document.getElementById("kpi_gasto").innerHTML = "R$ " + gastoMedioCalculado.toFixed(2);
+                        document.getElementById("kpi_total").innerHTML = total;
                     });
                 }
             });

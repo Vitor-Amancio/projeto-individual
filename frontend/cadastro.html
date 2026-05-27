@@ -39,10 +39,6 @@
                          Assim que inserir vá para o script abaixo.
                      -->
           <div class="campo">
-            <span>Código de ativação:</span>
-            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
-          </div>
-          <div class="campo">
             <span>Nome:</span>
             <input id="nome_input" type="text" placeholder="Seu nome" />
           </div>
@@ -79,7 +75,6 @@
 <script>
 
   // Array (Vetor) de Códigos VIP para validar o cadastro
-  var codigosVip = ["FERRARI90", "PORSCHE997", "BMW2000"];
 
   function cadastrar() {
     // Recuperando valores
@@ -94,8 +89,7 @@
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      confirmacaoSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
@@ -104,22 +98,6 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Usando For para verificar se o código VIP é válido
-    var codigoValido = false;
-    for (let i = 0; i < codigosVip.length; i++) {
-      if (codigosVip[i] == codigoVar) {
-        codigoValido = true;
-        break; // Achou o código, para o loop
-      }
-    }
-
-    if (!codigoValido) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = "Código de Convite VIP Inválido!";
-      return false;
-    }
-
-    // Se passou na validação do vetor, envia para o banco
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
