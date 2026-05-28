@@ -8,17 +8,22 @@ function buscarKpis(req, res) {
     if (idUsuario == undefined) {
         res.status(400).send("Seu idUsuario está undefined!");
     } else {
-        // Envia o id para o Model buscar no banco e retorna a promessa pro front-end
+        // envia o id para o model buscar no banco e retorna a promessa pro front-end
         manutencaoModel.buscarKpis(idUsuario)
+            // .then captura a resposta de sucesso quando o banco de dados termina a consulta
             .then(function (resultado) {
                 if (resultado.length > 0) {
+                    // status 200 significa ok, a requisicao deu certo e retornou dados
                     res.status(200).json(resultado[0]);
                 } else {
+                    // status 204 significa no content, deu certo mas a tabela esta vazia
                     res.status(204).send("Nenhum resultado encontrado!");
                 }
             }).catch(function (erro) {
+                // .catch captura e trata erros caso o banco caia ou a query esteja errada
                 console.log(erro);
                 console.log("Houve um erro ao buscar os KPIs: ", erro.sqlMessage);
+                // status 500 significa internal server error (erro no servidor/banco)
                 res.status(500).json(erro.sqlMessage);
             });
     }
@@ -93,10 +98,11 @@ function buscarUltimas(req, res) {
     }
 }
 
-// Inserindo as manuntenções no banco de dados
+// inserindo as manutencoes no banco de dados
 function inserir(req, res) {
-    // Crie uma variável que vá recuperar os valores para serem inseridos no BD
+    // req.params pega os dados que vieram na url da rota (ex: o id do usuario)
     var idUsuario = req.params.idUsuario;
+    // req.body pega os dados que o frontend enviou dentro do corpo (body) do fetch json
     var data_servico = req.body.dataServer;
     var quilometragem = req.body.quilometragemServer;
     var valor = req.body.valorServer;
@@ -141,8 +147,9 @@ function inserir(req, res) {
 
 }
 
+// inserindo veiculos no banco de dados
 function inserirVeiculo(req, res) {
-    // Crie uma variável que vá recuperar os valores para serem inseridos no BD
+    // recupera id da url e os outros dados do body
     var idUsuario = req.params.idUsuario;
     var marca = req.body.marcaServer;
     var modelo = req.body.modeloServer;

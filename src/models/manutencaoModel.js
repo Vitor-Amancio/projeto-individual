@@ -15,6 +15,9 @@ function buscarKpis(idUsuario) {
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
+    //subquery para visuaizar todos os veiculos inclusive os que não tem manutenção.
+    //SUM para somar todos os valores de manutenção.
+    //COUNT para contar quantas linhas tem em manutencao.
 }
 
 // Função para alimentar o Gráfico de Barras com o custo por mês
@@ -31,6 +34,12 @@ function buscarCustoMensal(idUsuario) {
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
+    //MONTH e YEAR foram usado para extrais mes e ano.
+    //CURRENT_DATE para retornar a data atual, YEAR(m.data_servico) = YEAR(CURRENT_DATE()) é usado
+    //para mostrar os gastos do ano atual
+    //GROUP BY MONTH foi usado para é usad para não somar tudo de uma vez, assim semparando em lotes por mes
+    // e soma
+    //ORDER BY mes traz os dados em ordem cronologica
 }
 
 // Função para alimentar o Gráfico de Rosca com a contagem de tipos de manutenção
@@ -48,6 +57,9 @@ function buscarDistribuicao(idUsuario) {
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
+    //Join com veiculos é para garantir que venha so os dados do usuario logado, 
+    //o segundo join para trocar os numeros de id de manutencoes por nomes legiveis ex: Estetica.
+    //GROUP BY usado para agrupar por categoria de manutencao.
 }
 
 // Função para preencher a tabela de Histórico Recente ultimas 5 manutenções
@@ -68,8 +80,12 @@ function buscarUltimas(idUsuario) {
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
+    //DATE_FORMAT para formatar a datada no padrao usado no brasil
+    //CONCAT junta as strings de marca e modelo
+    //ORDER BY m.data_servico DESC ordenando da manutencao mais recente para a mais antiga
 }
-// Funcao para insrir as manutenções dos veiculos
+// funcao para inserir as manutencoes no banco de dados
+// a string sql pega os parametros js e coloca dentro do values
 function inserir(data_servico, quilometragem, valor, descricao, fk_veiculo, fk_tipo) {
     var instrucaoSql = `
     INSERT INTO manutencao (data_servico, quilometragem, valor, descricao, fk_veiculo, fk_tipo) 
@@ -79,7 +95,7 @@ function inserir(data_servico, quilometragem, valor, descricao, fk_veiculo, fk_t
     return database.executar(instrucaoSql);
 }
 
-//Função para inserir os veiculo
+// funcao para inserir o veiculo
 function inserirVeiculo(marca, modelo, ano, placa, fk_usuario) {
     var instrucaoSql = `
     INSERT INTO veiculo (marca, modelo, ano, placa, fk_usuario) VALUES ('${marca}', '${modelo}', ${ano}, '${placa}', ${fk_usuario});

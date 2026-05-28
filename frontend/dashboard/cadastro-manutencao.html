@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../image/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,7 +108,7 @@
             document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
         }
 
-        //listar veiculos do usuario
+        // buscar os veiculos que o usuario ja tem para colocar na caixa de selecao (select)
         function carregarVeiculos() {
             var idUsuario = sessionStorage.ID_USUARIO;
 
@@ -126,12 +126,14 @@
                         resposta.json().then(function (respostaJson) {
                             var select = document.getElementById("veiculo_select");
 
+                            // laco de repeticao (for) para criar uma opcao para cada veiculo retornado do banco
                             for (let i = 0; i < respostaJson.length; i++) {
                                 let veiculo = respostaJson[i];
+                                // createElement cria uma nova tag html <option> via javascript
                                 let option = document.createElement("option");
                                 option.value = veiculo.id;
                                 option.innerHTML = veiculo.marca + " " + veiculo.modelo;
-                                select.appendChild(option);
+                                select.appendChild(option); // adiciona a opcao dentro da caixa de selecao
                             }
                         });
                     }
@@ -143,8 +145,9 @@
             });
         }
 
-        // cadastrar nova manutencao no banco de dados
+        // funcao para pegar todos os dados preenchidos e enviar para cadastrar a manutencao
         function cadastrarManutencao() {
+            // pegando os valores que estao na tela
             var idVeiculoVar = document.getElementById('veiculo_select').value;
             var dataVar = document.getElementById('data_input').value;
             var tipoVar = document.getElementById('tipo_select').value;

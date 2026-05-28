@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../image/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,8 +87,9 @@
             document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
         }
 
-        // cadastra veiculo no bd
+        // funcao para pegar os dados digitados e mandar pro banco cadastrar o veiculo
         function cadastrarVeiculo() {
+            // pegando os valores que o usuario digitou nos inputs da tela usando getElementById
             var marcaVar = document.getElementById('marca_input').value;
             var modeloVar = document.getElementById('modelo_input').value;
             var anoVar = document.getElementById('ano_input').value;
@@ -100,6 +101,8 @@
                 return false;
             }
 
+            // usando o fetch com metodo POST para enviar os dados para o backend
+            // o body transforma as variaveis javascript em um formato json que a api entende
             fetch(`/manutencao/inserirVeiculo/${idUsuarioVar}`, {
                 method: "POST",
                 headers: {

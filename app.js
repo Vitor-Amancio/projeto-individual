@@ -19,10 +19,12 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var manutencaoRouter = require("./src/routes/manutencao")
 
+// habilita o json para a api conseguir receber e entender dados json
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "frontend")));
 
+// o cors permite que o front-end faca requisicoes para nossa api sem ser bloqueado
 app.use(cors());
 
 app.use("/", indexRouter);

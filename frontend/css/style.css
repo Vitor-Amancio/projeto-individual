@@ -25,6 +25,7 @@ img {
 }
 
 nav {
+  /* flexbox usado para alinhar os itens no menu lado a lado com espaco no meio */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,6 +75,7 @@ nav a:hover {
   background: #E8E6E1;
 }
 
+/* grid divide a secao de destaque em duas colunas de tamanhos iguais usando 1fr */
 .destaque {
   display: grid;
   grid-template-columns: 1fr 1fr;

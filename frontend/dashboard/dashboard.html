@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-    <link rel="icon" href="image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../image/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,6 +90,7 @@
 
             <div class="table-container">
                 <div class="chart-title">Últimas Manutenções Realizadas</div>
+                <!-- Criando a tabela de historico de manutenção -->
                 <table>
                     <thead>
                         <tr>
@@ -108,6 +109,8 @@
     </div>
 
     <script>
+        // sessionStorage salva os dados so enquanto a aba ta aberta
+        // usamos para manter id e nome do usuario salvos durante a navegacao
         if (sessionStorage.NOME_USUARIO) {
             document.getElementById('b_usuario').innerHTML = sessionStorage.NOME_USUARIO;
         }
@@ -160,11 +163,14 @@
                 }
             }
         });
-        //buscando dados das KPIs e calculando a media de gasto
+        // funcao para buscar dados das kpis e calculando a media de gasto
         function buscarKpis() {
             var idUsuario = sessionStorage.ID_USUARIO;
+            // fetch faz requisicoes para o backend para buscar ou enviar dados
             fetch(`/manutencao/kpis/${idUsuario}`).then(function (resposta) {
+                // o .ok verifica se deu tudo certo na requisicao (status 200)
                 if (resposta.ok) {
+                    // .json() transforma a resposta recebida em um objeto javascript para usar no html
                     resposta.json().then(function (respostaJson) {
 
                         var custo = Number(respostaJson.custoTotal || 0);  // usando o || 0 para caso nao houver, o valor padrao seja 0
@@ -194,6 +200,8 @@
                         var mesesLabel = [];
                         var valoresCustos = [];
 
+                        // laco de repeticao para passar por cada mes retornado do banco
+                        // ele separa o nome do mes e o custo em duas listas (arrays) para colocar no grafico
                         for (let i = 0; i < respostaJson.length; i++) {
                             var mesNumero = respostaJson[i].mes;
                             mesesLabel.push(nomeDosMeses[mesNumero]);
@@ -219,6 +227,7 @@
                         var tiposLabel = [];
                         var quantidades = [];
 
+                        // for usado para pegar cada tipo de manutencao do banco e preencher o grafico de rosca
                         for (let i = 0; i < respostaJson.length; i++) {
                             tiposLabel.push(respostaJson[i].tipo);
                             quantidades.push(respostaJson[i].quantidade);
@@ -242,6 +251,7 @@
                         var tabela = document.getElementById("tabela_ultimas");
                         tabela.innerHTML = "";
 
+                        // laco for para criar dinamicamente as linhas da tabela de historico para cada manutencao que veio do banco
                         for (let i = 0; i < respostaJson.length; i++) {
                             var manut = respostaJson[i];
 
@@ -250,6 +260,7 @@
                             if (manut.tipo === "Upgrade") classeBadge = "bg-up";
                             if (manut.tipo === "Estética") classeBadge = "bg-est";
 
+                            //Aqui Cria as linhas das tabelas para serem enviadas para a tabela no html.
                             var novaLinha = `
                                 <tr>
                                     <td>${manut.dataFormatada}</td>

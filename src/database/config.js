@@ -16,6 +16,8 @@ function executar(instrucao) {
         return Promise.reject("AMBIENTE NÃO CONFIGURADO EM .env");
     }
 
+    // a promise serve para o codigo esperar o banco responder a query antes de continuar
+    // retorna resolve se a query der certo ou reject se der erro
     return new Promise(function (resolve, reject) {
         var conexao = mysql.createConnection(mySqlConfig);
         conexao.connect();

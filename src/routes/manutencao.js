@@ -1,10 +1,11 @@
 var express = require("express");
 var router = express.Router();
 
-// Controller de manutenção
+// importando o controller que tem a logica e as funcoes para essas rotas
 var manutencaoController = require("../controllers/manutencaoController.js");
 
-// Busca KPIs gerais do usuário
+// get eh usado quando queremos buscar alguma informacao do banco de dados (ex: kpis)
+// o :idUsuario significa que o link vai receber um parametro variavel na url
 router.get("/kpis/:idUsuario", function (req, res) {
     manutencaoController.buscarKpis(req, res);
 });
@@ -24,7 +25,7 @@ router.get("/buscar-ultimas/:idUsuario", function (req, res) {
     manutencaoController.buscarUltimas(req, res);
 });
 
-// Inserir dados no banco de dados
+// post eh usado quando queremos enviar e salvar novos dados no banco (ex: um cadastro)
 router.post("/inserir/:idUsuario", function (req, res) {
     manutencaoController.inserir(req, res);
 });
