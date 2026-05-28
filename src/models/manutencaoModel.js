@@ -64,7 +64,7 @@ function buscarUltimas(idUsuario) {
         JOIN tipo_manutencao t ON m.fk_tipo = t.id
         WHERE v.fk_usuario = ${idUsuario}
         ORDER BY m.data_servico DESC
-        LIMIT 5;
+        LIMIT 15;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
