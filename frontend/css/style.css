@@ -1,9 +1,13 @@
+/* o * seleciona todos os elementos do html. 
+   coloco margin e padding 0 pra tirar as margens padroes do navegador.
+   o border-box garante que o padding nao aumente o tamanho final das caixas */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* faz a pagina rolar suave quando clico em algum link da mesma pagina */
 html {
   scroll-behavior: smooth;
 }
@@ -61,6 +65,7 @@ nav a:hover {
   color: #FAFAF8;
 }
 
+/* estilizando os botoes. o letter-spacing da um espaco legal entre as letras */
 .botao {
   background: #FAFAF8;
   color: #01061d;
@@ -71,6 +76,7 @@ nav a:hover {
   letter-spacing: 0.04em;
 }
 
+/* o :hover muda a cor do fundo do botao quando eu passo o mouse em cima dele */
 .botao:hover {
   background: #E8E6E1;
 }
@@ -110,6 +116,7 @@ nav a:hover {
   align-self: flex-start;
 }
 
+/* o object-fit cover faz a imagem preencher o espaco todo sem distorcer, ela corta o que sobrar */
 .destaque img {
   width: 100%;
   height: 100%;
@@ -284,6 +291,7 @@ footer {
   letter-spacing: 0.05em;
 }
 
+/* media query para telas de celular. quando a tela for menor que 768px, o grid muda pra 1 coluna só pra caber na tela */
 @media (max-width: 768px) {
   .destaque {
     grid-template-columns: 1fr;

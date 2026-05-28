@@ -1,3 +1,5 @@
+/* configuro o body com flex pra separar o menu lateral do resto da tela. 
+   height 100vh pega a altura toda da tela e overflow hidden esconde barra de rolagem geral se vazar conteudo */
 body {
     font-family: Arial, sans-serif;
     background-color: #F2F0EB;
@@ -54,12 +56,14 @@ body {
     font-size: 0.95rem;
 }
 
+/* o rgba com 0.7 no final deixa a cor um pouco transparente (70% visivel) */
 .btn-nav-white {
     color: rgba(255, 255, 255, 0.7);
     font-weight: bold;
     background-color: transparent;
 }
 
+/* quando passo o mouse, mudo o fundo pra um branco bem transparente e a letra fica toda branca */
 .btn-nav-white:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #FAFAF8;
@@ -112,16 +116,20 @@ body {
     background: #FAFAF8;
     padding: 1.5rem;
     border-radius: 2px;
+    /* o box-shadow cria a sombra ao redor do card pra dar um efeito de relevo e soltar ele do fundo */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    /* flex 1 faz os cards crescerem pra ocupar o mesmo espaco que os outros na linha */
     flex: 1;
     min-width: 200px;
     border-top: 3px solid #01061d;
+    /* a transition prepara o elemento para que a animacao de hover seja suave, durando 0.2s */
     transition: transform 0.2s;
     border-left: 1px solid #DDD;
     border-right: 1px solid #DDD;
     border-bottom: 1px solid #DDD;
 }
 
+/* quando passo o mouse no card, ele sobe 3 pixels no eixo Y (efeito de levantar) */
 .kpi-card:hover {
     transform: translateY(-3px);
 }
@@ -180,6 +188,7 @@ body {
 
 table {
     width: 100%;
+    /* o border-collapse junta as bordas das celulas pra nao ficar aquele espaco duplo feio de tabela nativa do html */
     border-collapse: collapse;
     text-align: left;
 }
